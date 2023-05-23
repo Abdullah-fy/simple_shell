@@ -3,8 +3,7 @@
  * exec_cmd - execute a command
  *
  * @cmd: command string
- * @env: pointer to pointer to an array of pointers to strings
- * called the "environment"
+ * @env: an array of pointers to environment variables
  */
 void exec_cmd(char *cmd, char **env)
 {
@@ -12,19 +11,50 @@ void exec_cmd(char *cmd, char **env)
 	exec_arg *head = NULL;
 
 	strtok(cmd, "\n");
-	head = arg_list(cmd);
+	head = arg_list(cmd, " ");
 	arg = arg_value(head);
 
 	if (execve(arg[0], arg, env) == -1)
 	{
-		free_argv(head);
-		free(arg);
 		perror("./hsh");
 		exit(EXIT_FAILURE);
 	}
+}
+/**
+ * fork_cmd - create a child process
+ *
+ * @buf: command string
+ * @env: an array of pointers to environment variables.
+ *
+ */
+void fork_cmd(char *buf, char **env)
+{
+	char **arg = NULL;
+	exec_arg *head = NULL;
+	char *cmd = NULL;
 
-	free_argv(head);
-	free(arg);
+	strtok(buf, "\n");
+	head = arg_list(buf, " ");
+	arg = arg_value(head);
+	cmd = file_exist(arg[0], env);
+	if (fork() == 0 && cmd)
+	{
+		if (execve(cmd, arg, env) == -1)
+		{
+			free_argv(head);
+			free(arg);
+			perror("./hsh");
+			exit(EXIT_FAILURE);
+		}
+		free(cmd);
+		free_argv(head);
+		free(arg);
+		exit(EXIT_SUCCESS);
+	}
+	else
+	{
+		wait(NULL);
+	}
 }
 /**
  * main - Entry point
@@ -40,31 +70,18 @@ char *argv[] __attribute__((unused)), char *env[])
 {
 	char *buf = NULL;
 	size_t size = 0;
+	ssize_t rd = 0;
 
 	if (isatty(STDIN_FILENO))
 	{
-		while (1)
+		while (rd != EOF)
 		{
-			if (fork() == 0)
+			write(STDIN_FILENO, "($) ", 4);
+			rd = getline(&buf, &size, stdin);
+			if (rd != EOF)
 			{
-				write(STDIN_FILENO, "($) ", 4);
-				if (getline(&buf, &size, stdin) == -1)
-				{
-					write(STDIN_FILENO, "\n", 1);
-					exit(EXIT_SUCCESS);
-				}
-				exec_cmd(buf, env);
-				exit(EXIT_SUCCESS);
+				fork_cmd(buf, env);
 			}
-			else
-			{
-				if (wait(NULL) == -1)
-				{
-					perror("Child process");
-					exit(EXIT_FAILURE);
-				}
-			}
-
 		}
 
 	}
@@ -73,6 +90,5 @@ char *argv[] __attribute__((unused)), char *env[])
 		getline(&buf, &size, stdin);
 		exec_cmd(buf, env);
 	}
-	free(buf);
 	return (0);
 }
