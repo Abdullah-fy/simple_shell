@@ -25,9 +25,9 @@ void exec_cmd(char *cmd, char **env)
  *
  * @buf: command string
  * @env: an array of pointers to environment variables.
- *
+ * Return: 1 if procees went well, 0 if it fails or exit
  */
-void fork_cmd(char *buf, char **env)
+int fork_cmd(char *buf, char **env)
 {
 	char **arg = NULL;
 	exec_arg *head = NULL;
@@ -37,6 +37,12 @@ void fork_cmd(char *buf, char **env)
 	head = arg_list(buf, " ");
 	arg = arg_value(head);
 	cmd = file_exist(arg[0], env);
+	if (str_cmp(arg[0], "exit") == 1)
+	{
+		free(buf);
+		return (0);
+	}
+
 	if (fork() == 0 && cmd)
 	{
 		if (execve(cmd, arg, env) == -1)
@@ -55,6 +61,7 @@ void fork_cmd(char *buf, char **env)
 	{
 		wait(NULL);
 	}
+	return (1);
 }
 /**
  * main - Entry point
@@ -80,7 +87,8 @@ char *argv[] __attribute__((unused)), char *env[])
 			rd = getline(&buf, &size, stdin);
 			if (rd != EOF)
 			{
-				fork_cmd(buf, env);
+				if (fork_cmd(buf, env) == 0)
+					break;
 			}
 		}
 
