@@ -1,5 +1,28 @@
 #include "main.h"
 /**
+ * str_cmp - compares two string
+ *
+ * @str1: first string
+ * @str2: second string
+ *
+ * Return: 1 if both are the same, 0 otherwise
+ */
+int str_cmp(char *str1, char *str2)
+{
+	int i = 0;
+
+	if (str1 == NULL || str2 == NULL)
+		return (0);
+
+	while (str1[i])
+	{
+		if (str1[i] != str2[i])
+			return  (0);
+		i++;
+	}
+	return (1);
+}
+/**
  * _strlen - calculates the length of a string
  *
  * @str: string that we want to know its length
