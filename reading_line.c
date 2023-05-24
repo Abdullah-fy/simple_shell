@@ -27,7 +27,7 @@ char *reading_line(void)
 		{
 			free(read);
 			perror("error in reading the input");
-			exit(0);
+			exit()EXIT_SUCCESS;
 		}
 	}
 	return (read);
