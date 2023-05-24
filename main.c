@@ -1,102 +1,36 @@
 #include "main.h"
 /**
- * exec_cmd - execute a command
+ * main - Runs a simple shell that can execute commands and display environment variables
  *
- * @cmd: command string
- * @env: an array of pointers to environment variables
+ * Return: 0 on success
  */
-void exec_cmd(char *cmd, char **env)
-{
-	char **arg = NULL;
-	exec_arg *head = NULL;
+int main(void) {
+extern char **environ;
+   
+ char *command = NULL;
+    size_t command_size = 0;
+    ssize_t nread_char;
+    while (1) {
+        printf("simple_shell$ ");
+       nread_char = _getline(&command, &command_size, stdin);
+        if (nread_char == -1) {
+            printf("\n");
+            break;
+        }
+        if (command[nread_char - 1] == '\n') {
+            command[nread_char - 1] = '\0';
+        }
+        if (_strcmp(command, "exit") == 0) {
+            free(command);
+            exit_shell();
+        } else if (_strcmp(command, "env") == 0) {
+           print_env(environ);
+        } else {
+            handle_command(command);
+        }
+    }
 
-	strtok(cmd, "\n");
-	head = arg_list(cmd, " ");
-	arg = arg_value(head);
-
-	if (execve(arg[0], arg, env) == -1)
-	{
-		perror("./hsh");
-		exit(EXIT_FAILURE);
-	}
+    free(command);
+    return 0;
 }
-/**
- * fork_cmd - create a child process
- *
- * @buf: command string
- * @env: an array of pointers to environment variables.
- * Return: 1 if procees went well, 0 if it fails or exit
- */
-int fork_cmd(char *buf, char **env)
-{
-	char **arg = NULL;
-	exec_arg *head = NULL;
-	char *cmd = NULL;
 
-	strtok(buf, "\n");
-	head = arg_list(buf, " ");
-	arg = arg_value(head);
-	cmd = file_exist(arg[0], env);
-	if (str_cmp(arg[0], "exit") == 1)
-	{
-		free(buf);
-		return (0);
-	}
-
-	if (fork() == 0 && cmd)
-	{
-		if (execve(cmd, arg, env) == -1)
-		{
-			free_argv(head);
-			free(arg);
-			perror("./hsh");
-			exit(EXIT_FAILURE);
-		}
-		free(cmd);
-		free_argv(head);
-		free(arg);
-		exit(EXIT_SUCCESS);
-	}
-	else
-	{
-		wait(NULL);
-	}
-	return (1);
-}
-/**
- * main - Entry point
- *
- * @argc: the number of arguments passed to the program
- * @argv: pointer to an array of strings
- * @env: an array of pointers to environment variables.
- *
- * Return: always 0 in success
- */
-int main(int argc __attribute__((unused)),
-char *argv[] __attribute__((unused)), char *env[])
-{
-	char *buf = NULL;
-	size_t size = 0;
-	ssize_t rd = 0;
-
-	if (isatty(STDIN_FILENO))
-	{
-		while (rd != EOF)
-		{
-			write(STDIN_FILENO, "($) ", 4);
-			rd = getline(&buf, &size, stdin);
-			if (rd != EOF)
-			{
-				if (fork_cmd(buf, env) == 0)
-					break;
-			}
-		}
-
-	}
-	else
-	{
-		getline(&buf, &size, stdin);
-		exec_cmd(buf, env);
-	}
-	return (0);
-}

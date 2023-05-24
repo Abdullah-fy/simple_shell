@@ -1,0 +1,26 @@
+hsh - simple_shell general commands manual
+
+The simple shell is a program that takes commands from the keyboard and gives them to the operating system to perform. It incorporates many features and generally executes other commands. An interactive shell generally prompts before each command, inspects arguments, execute them and handles possible errors. The simple shell reads input in terms of lines from a file and breaks it up into words at whitespaces. 
+
+./hsh examples
+
+./hsh
+simple_shell$ ls -al
+total 72
+drwxrwxr-x 3 abdullah abdullah  4096 أبر 28 21:50 .
+drwxrwxr-x 3 abdullah abdullah  4096 أبر 27 16:11 ..
+-rw-rw-r-- 1 abdullah abdullah   129 أبر 28 21:01 AUTHORS
+-rw-rw-r-- 1 abdullah abdullah   520 أبر 27 16:12 env.c
+-rw-rw-r-- 1 abdullah abdullah   374 أبر 28 20:41 excute.c
+-rw-rw-r-- 1 abdullah abdullah   162 أبر 27 14:26 exit.c
+drwxrwxr-x 8 abdullah abdullah  4096 أبر 28 20:55 .git
+-rw-rw-r-- 1 abdullah abdullah   434 أبر 28 20:55 handle.c
+-rwxrwxr-x 1 abdullah abdullah 17248 أبر 28 20:41 hsh
+-rw-rw-r-- 1 abdullah abdullah   827 أبر 28 20:15 main.c
+-rw-rw-r-- 1 abdullah abdullah   329 أبر 28 20:06 main.h
+-rw-rw-r-- 1 abdullah abdullah   476 أبر 28 21:06 man_1_simple_shell
+-rw-rw-r-- 1 abdullah abdullah   788 أبر 27 14:29 path.c
+-rw-rw-r-- 1 abdullah abdullah    15 أبر 27 13:43 README.md
+simple_shell$ exit
+Exiting shell...
+

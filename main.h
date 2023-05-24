@@ -1,26 +1,20 @@
-#ifndef SIMPLE_SHELL
-#define SIMPLE_SHELL
+#ifndef MAIN_H
+#define MAIN_H
+
 #include <stdio.h>
-#include<sys/wait.h>
-#include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <signal.h>
-typedef struct exec_arg
-{
-        char *str;
-        struct exec_arg *next;
-} exec_arg;
-char **arg_value(exec_arg *head);
-exec_arg *arg_list(char *buf, char *delim);
-void free_argv(exec_arg *head);
-void exec_cmd(char *cmd, char **env);
-char *str_concat(char *str1, char *str2);
-int full_path(char *cmd);
-int _strlen(char *str);
-char *_getenv(const char *name, char **env);
-char *file_exist(char *path, char **env);
-int fork_cmd(char *buf, char **env);
-char *str_dup(char *str);
-int str_cmp(char *str1, char *str2);
-#endif
+#include <string.h>
+#include <sys/wait.h>
+char *_strcat(char *dest, const char *src);
+char *_strcpy(char *dest, const char *src);
+int _strcmp(const char *s1, const char *s2);
+void run_shell(void);
+void handle_command(char *command);
+void execute_command(char **args);
+void set_path(char **args);
+void exit_shell(void);
+void print_environment(void);
+void print_env(char **envp);
+#endif /* MAIN_H */
+
