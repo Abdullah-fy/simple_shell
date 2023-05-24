@@ -2,19 +2,29 @@
 #define MAIN_H
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/wait.h>
-char *_strcat(char *dest, const char *src);
-char *_strcpy(char *dest, const char *src);
-int _strcmp(const char *s1, const char *s2);
-void run_shell(void);
-void handle_command(char *command);
-void execute_command(char **args);
-void set_path(char **args);
-void exit_shell(void);
-void print_environment(void);
-void print_env(char **envp);
-#endif /* MAIN_H */
 
+extern char **environ;
+void interactive(void);
+void non_interactive(void);
+
+
+char *reading_line(void);
+char **splits(char *read);
+int excute_buildin(char **arg);
+
+int excute_non_buildin(char **arg);
+
+
+void set_path(char **args);
+
+
+int cd_file(char **arg);
+int exit_file(char **arg);
+int env_file(char **arg);
+int help_file(char **arg);
+
+#endif
