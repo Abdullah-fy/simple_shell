@@ -18,6 +18,7 @@ int excute_buildin(char **arg);
 
 int excute_non_buildin(char **arg);
 
+char *reread(void);
 
 void set_path(char **args);
 

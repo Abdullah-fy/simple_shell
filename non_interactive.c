@@ -14,7 +14,7 @@ void non_interactive(void)
 
 	while (status == -1)
 	{
-                read = reading_line();
+                read = reread();
                 arg = splits(read); /* tokenize line */
                 status = excute_buildin(arg);
                 /* avoid memory leaks */
