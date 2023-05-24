@@ -12,8 +12,8 @@ void non_interactive(void)
         char **arg;
         int status = -1;
 
-	while (status == -1)
-	{
+        while (status == -1)
+        {
                 read = reread();
                 arg = splits(read); /* tokenize line */
                 status = excute_buildin(arg);

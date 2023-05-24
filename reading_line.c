@@ -10,17 +10,22 @@ char *reading_line(void)
         char *read = NULL;
         size_t command_size = 0;
 	ssize_t nread = getline(&read, &command_size, stdin);
-
-        if (nread == -1) /* if getline fails */
+	/* if getline function has failed*/
+        if (nread == -1) 
         {
-                if (feof(stdin)) /* test for the eof */
+		/**
+		 * handle if we at the end of the file or the user
+		 * entered ctrl d
+		 */
+                if (feof(stdin))
                 {
-                        free(read); /* avoid memory leaks when ctrl + d */
-                        exit(EXIT_SUCCESS); /* we recieved an eof */
+			/*avoid leaking of the memory*/
+                        free(read);
+                        exit(EXIT_SUCCESS);
                 }
                 else
                 {
-                        free(read); /* avoid memory leaks when getline fails */
+                        free(read);
                         perror("error in reading the input");
                         exit(EXIT_FAILURE);
                 }

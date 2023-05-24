@@ -11,10 +11,12 @@
 char **splits(char *read)
 {
         int command_size = 64;
+	/* int will use to store tokenn in tokenns*/
         int j = 0;
+	/*primary, dynamically allocate for tokenns */
         char **tokenns = malloc(command_size * sizeof(char *));
         char *tokenn;
-
+	/* if memory allocation failed*/
         if (!tokenns)
         {
                 printf("error to allocate tokenn");
@@ -23,7 +25,7 @@ char **splits(char *read)
         tokenn = strtok(read, " \n\r\a\t");
         while (tokenn != NULL)
         {
-                /* handle comments */
+                /* handling if comments */
                 if (tokenn[0] == '#')
                 {
                         break;

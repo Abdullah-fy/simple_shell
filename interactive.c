@@ -15,17 +15,21 @@ void interactive(void)
     while (status == -1)
     {
 	printf("simple_prompt$ ");
-       	read = reading_line(); /* read line from stdin */
-        arg = splits(read); /* tokenize line */
+	/* read the input from the user*/
+       	read = reading_line();
+       /*split the input */	
+        arg = splits(read); 
+	/*check the the input is builtin command if it is we will excute it*/
         status = excute_buildin(arg);
         /* avoid memory leaks */
         free(read);
         free(arg);
-        /* exit with status */
+        /* if status was equal or more than zero means we excuted the code successfully and we will
+	 * exit
+	 * */
         if (status >= 0) {
             exit(status);
         }
-        printf("simple_prompt$ "); /* print prompt symbol */
     }
 }
 
