@@ -10,8 +10,14 @@
 int excute_buildin(char **arg)
 {
 	char *builtin_functions[] = {"cd", "env", "help", "exit"};
-	int (*builtin_func_code[])(char **) = {&cd_file, &env_file, &help_file, &exit_file};
-	long unsigned int j = 0;
+
+	int (*builtin_func_code[])(char **) = {
+		&cd_file,
+		&env_file,
+		&help_file,
+		&exit_file
+	};
+	unsigned long int j = 0;
 
 	if (arg[0] == NULL)
 	{

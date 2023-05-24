@@ -9,7 +9,7 @@
 int help_file(char **arg)
 {
 	char *builtin_functions[] = {"cd", "env", "help", "exit"};
-	long unsigned int i = 0;
+	unsigned long int i = 0;
 	(void)(**arg);
 
 	printf("\n---help simple_shell---\n");

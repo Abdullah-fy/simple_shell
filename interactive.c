@@ -23,10 +23,6 @@ void interactive(void)
 		/* avoid memory leaks */
 		free(read);
 		free(arg);
-/* if status was equal or more than zero means we excuted
- * the code successfully and we will
- * exit
- */
 		if (status >= 0)
 		{
 			exit(status);

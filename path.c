@@ -1,9 +1,15 @@
 #include "main.h"
+
 /*
- * set_path - funtion find the path
+ * set_path - function that finds the path of a command
  *
- * Return: nothing
+ * This function takes a command as input and searches for its path
+ * in the system's environment variable PATH. It sets the path of the
+ * command in the args array for execution.
+ *
+ * Return: void
  */
+
 void set_path(char **args)
 {
 	char *path = getenv("PATH");
