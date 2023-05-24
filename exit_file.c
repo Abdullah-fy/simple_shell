@@ -8,14 +8,14 @@
  */
 int exit_file(char **arg)
 {
-	/* exit with status */
-	if (arg[1])
+		if (*arg)
 	{
-		return (atoi(arg[1]));
+		buffers1(NULL, NULL);
+		buffers2(NULL, NULL);
+		buffers3(NULL, NULL);
+		buffers4(NULL, NULL);
+		buffers5(NULL);
+		exit(2);
 	}
-	/* exit success */
-	else
-	{
-		return (0);
-	}
+	return (0);
 }
