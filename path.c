@@ -10,6 +10,7 @@ void set_path(char **args)
 	char path_copy[1024];
 	char *dir;
 	char cmd_path[1024];
+
 	strcpy(path_copy, path);
 	dir = strtok(path_copy, ":");
 	while (dir != NULL)

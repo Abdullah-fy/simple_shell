@@ -18,6 +18,6 @@ int cd_file(char **arg)
 		{
 			printf("error in own_cd.c: changing dir\n");
 		}
-	}	
+	}
 	return (-1);
 }
