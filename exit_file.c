@@ -8,14 +8,12 @@
  */
 int exit_file(char **arg)
 {
-		if (*arg)
+	if (arg[1])
 	{
-		buffers1(NULL, NULL);
-		buffers2(NULL, NULL);
-		buffers3(NULL, NULL);
-		buffers4(NULL, NULL);
-		buffers5(NULL);
-		exit(2);
+		return (atoi(arg[1]));
 	}
-	return (0);
+	else
+	{
+		return (0);
+	}
 }
